@@ -9,85 +9,88 @@ Analyze the quality, accuracy, and depth of the generated responses.
 
 
 ## Algorithm:
-1. **Select Prompting Patterns to Compare**
+1. **Select Prompting Patterns**
 
-   * Zero-shot prompting (no examples, direct instruction).
-   * Few-shot prompting (include examples before the query).
-   * Chain-of-thought prompting (ask the model to “think step by step”).
-   * Role-based prompting (assign roles, e.g., “You are a teacher…”).
-   * Refined/basic prompting (clearer instructions vs vague).
+   * Zero-shot prompting
+   * Few-shot prompting
+   * Chain-of-thought prompting
+   * Role-based prompting
+   * Refined/basic prompting
 
-2. **Choose Test Scenarios**
+2. **Choose Specific Test Scenarios**
 
-   * Scenario A: Factual Q\&A (e.g., “Explain Newton’s 3 laws”).
-   * Scenario B: Creative writing (e.g., “Write a poem about the ocean”).
-   * Scenario C: Problem-solving (e.g., “Solve 12 + 18 / 3”).
-   * Scenario D: Summarization (e.g., “Summarize a paragraph in one line”).
+   * **Scenario A (Factual Q\&A):** *“Explain how Newton’s 2nd law of motion applies when pushing a shopping cart with different weights.”*
+   * **Scenario B (Creative Writing):** *“Write a 4-line poem about a stormy night at sea.”*
+   * **Scenario C (Problem Solving):** *“A worker completes a job in 12 days, another in 18 days. How many days if both work together?”*
+   * **Scenario D (Summarization):** *“Summarize this paragraph in 1 line: ‘The rise of electric vehicles is transforming the automobile industry by reducing carbon emissions, lowering fuel dependency, and encouraging governments to invest in green infrastructure.’”*
 
 3. **Run Experiment**
 
-   * Input same scenario with different prompting styles.
-   * Collect generated responses.
+   * Give same scenario prompt using each prompting style.
+   * Collect responses.
 
 4. **Evaluate Responses**
 
-   * **Quality**: fluency, clarity.
-   * **Accuracy**: correctness of information.
-   * **Depth**: level of reasoning or creativity.
+   * **Quality** (clarity, fluency)
+   * **Accuracy** (correctness, relevance)
+   * **Depth** (reasoning, creativity, contextual detail)
 
 5. **Compare**
 
-   * Highlight differences in response quality across prompting styles.
+   * Identify which prompting style gives the best performance per scenario.
 
 
 
 ## Output
-### **Scenario A – Factual Q\&A: Newton’s Laws**
+### **Scenario A – Factual Q\&A**
 
-* **Zero-shot Prompt:** *“Explain Newton’s laws.”*
-  → “Newton’s laws are three rules about motion and force.” (Vague)
+Prompt: *“Explain how Newton’s 2nd law of motion applies when pushing a shopping cart with different weights.”*
 
-* **Few-shot Prompt:**
-  *“Example: Law 1 – An object stays at rest unless acted on by a force.
-  Now explain all Newton’s laws.”*
-  → Gives clear explanation of all 3 laws with examples.
-
-* **Chain-of-thought Prompt:** *“Explain Newton’s laws step by step.”*
-  → Provides detailed reasoning and separate stepwise breakdown.
-
-* **Role-based Prompt:** *“You are a physics teacher. Explain Newton’s 3 laws with real-world examples.”*
-  → Response includes classroom-like examples (car braking, football kick).
+* **Zero-shot:** “Newton’s 2nd law says force = mass × acceleration. More weight means harder to push.” (Very short, lacks detail).
+* **Few-shot:** With example → explains how a 10 kg vs 30 kg cart requires more force for same acceleration.
+* **Chain-of-thought:** “Newton’s 2nd law: F = m × a. If the cart is 10 kg and you want 2 m/s², F = 20 N. If 30 kg, F = 60 N. So more weight = more force.” (Stepwise, clear).
+* **Role-based (Teacher):** “Imagine pushing an empty cart at the supermarket (easy). Now imagine it full of groceries (harder). That’s Newton’s 2nd law in action.”
 
 ---
 
-### **Scenario B – Creative Writing: Poem about the Ocean**
+### **Scenario B – Creative Writing**
 
-* **Zero-shot:** Short, generic 2-line poem.
-* **Few-shot:** Mimics given poetic style, richer language.
-* **Chain-of-thought:** Builds imagery step by step, more coherent theme.
-* **Role-based:** Writes poem as if from the perspective of a sailor.
+Prompt: *“Write a 4-line poem about a stormy night at sea.”*
+
+* **Zero-shot:** Simple 2 lines, “The sea is rough, the sky is dark.”
+* **Few-shot:** Matches poetic rhythm, imagery: thunder, lightning, restless waves.
+* **Chain-of-thought:** Builds mood step by step → imagery of storm, waves, sailor’s fear.
+* **Role-based (Sailor’s POV):** Writes poem from perspective of sailor battling the storm.
 
 ---
 
-### **Scenario C – Math Problem (12 + 18 / 3)**
+### **Scenario C – Problem Solving**
 
-* **Zero-shot:** Might output only final answer, sometimes wrong if careless.
-* **Chain-of-thought:** Writes calculation: “18 / 3 = 6, then 12 + 6 = 18.” (Correct).
+Prompt: *“A worker completes a job in 12 days, another in 18 days. How many days if both work together?”*
+
+* **Zero-shot:** “They take 7 days.” (May or may not explain).
+* **Few-shot:** Shows example of combined work → correct answer: 7.2 days.
+* **Chain-of-thought:** “Work rate = 1/12 + 1/18 = 5/36 job/day. So time = 36/5 = 7.2 days.” (Accurate).
+* **Role-based (Math tutor):** Explains step by step with analogy (painting a wall together).
 
 ---
 
 ### **Scenario D – Summarization**
 
-* **Zero-shot:** Generic one-liner, sometimes misses nuance.
-* **Few-shot:** Matches structure of given example summary, more precise.
-* **Role-based:** Summarizes in style requested (e.g., “as a news reporter”).
+Prompt: *“Summarize this in 1 line: EVs reduce emissions, lower fuel use, push governments to fund green infrastructure.”*
+
+* **Zero-shot:** “EVs are good for the environment.” (Too vague).
+* **Few-shot:** “EVs cut emissions, reduce fuel reliance, and drive government investment in green energy.” (Precise).
+* **Chain-of-thought:** Reads sentence, extracts 3 ideas, combines into concise 1-liner.
+* **Role-based (News reporter):** “Governments are investing in green infrastructure as EVs reshape the auto industry.”
+
 
 
 
 ## Result
-1. **Zero-shot prompting**: Fast but often vague or surface-level. Works well for simple queries, weak for complex reasoning.
-2. **Few-shot prompting**: Improves accuracy and style consistency by showing examples.
-3. **Chain-of-thought prompting**: Best for reasoning, math, or step-by-step explanations. Improves correctness.
-4. **Role-based prompting**: Best for context-specific or creative tasks (teaching, storytelling, summarization in a style).
-5. **Refined/clearer prompts always outperform broad or unstructured prompts.**
+1. **Zero-shot prompting**: Quick but oversimplified, misses depth in factual and summarization tasks.
+2. **Few-shot prompting**: Produces structured, style-consistent responses, especially useful in creative writing and summaries.
+3. **Chain-of-thought prompting**: Best for **problem-solving and reasoning** tasks; ensures stepwise correctness.
+4. **Role-based prompting**: Best for **engagement and contextual clarity** (teaching, storytelling, style-driven summaries).
+5. **Conclusion**: Refined and specific prompts yield significantly better responses than vague/general ones.
 
